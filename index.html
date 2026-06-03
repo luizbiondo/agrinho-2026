@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Interativo com Múltiplos Cards</title>
+    <title>Agrinho 2026 - Conexão Campo-Cidade</title>
     <style>
-        /* --- Variáveis de Cores (Tema) --- */
+        /* --- Variáveis de Cores (Tema Agrinho / Campo-Cidade) --- */
         :root {
-            --bg-principal: #f4f7f6;
+            --bg-principal: #f4f8f5;
             --bg-card: #ffffff;
-            --texto: #333333;
-            --texto-secundario: #666666;
-            --primaria: #4a90e2;
-            --secundaria: #50e3c2;
+            --texto: #2c3e50;
+            --texto-secundario: #546e7a;
+            --primaria: #2e7d32; /* Verde Campo */
+            --secundaria: #0277bd; /* Azul Cidade */
+            --destaque: #f9a825; /* Ouro/Sol/Colheita */
         }
 
         [data-theme="dark"] {
-            --bg-principal: #121214;
-            --bg-card: #1a1a24;
-            --texto: #f4f7f6;
-            --texto-secundario: #b3b3b3;
-            --primaria: #3a7bd5;
-            --secundaria: #3a6073;
+            --bg-principal: #131c15;
+            --bg-card: #1b261f;
+            --texto: #e0e6ed;
+            --texto-secundario: #90a4ae;
+            --primaria: #4caf50;
+            --secundaria: #29b6f6;
+            --destaque: #ffca28;
         }
 
         /* --- Reset e Estilos Gerais --- */
@@ -33,7 +35,7 @@
         }
 
         html {
-            scroll-behavior: smooth; /* Rolagem suave ao clicar nos links */
+            scroll-behavior: smooth;
         }
 
         body {
@@ -50,16 +52,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.15);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        .logo {
-            font-weight: bold;
-            font-size: 1.5rem;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-agrinho {
+            font-weight: 800;
+            font-size: 1.6rem;
             color: var(--primaria);
+            letter-spacing: 1px;
+        }
+
+        .logo-tema {
+            font-size: 0.9rem;
+            background-color: var(--secundaria);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: bold;
         }
 
         nav ul {
@@ -71,7 +89,7 @@
         nav a {
             text-decoration: none;
             color: var(--texto);
-            font-weight: 500;
+            font-weight: 600;
             position: relative;
         }
 
@@ -79,10 +97,10 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
+            height: 3px;
             bottom: -5px;
             left: 0;
-            background-color: var(--primaria);
+            background: linear-gradient(90deg, var(--primaria), var(--secundaria));
             transition: width 0.3s;
         }
 
@@ -91,74 +109,75 @@
         }
 
         .btn-tema {
-            background-color: var(--primaria);
+            background: linear-gradient(135deg, var(--primaria), var(--secundaria));
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .btn-tema:hover {
-            opacity: 0.9;
+            transform: scale(1.05);
         }
 
         /* --- Seções do Site --- */
         section {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 5rem 2rem 2rem 2rem; /* Padding superior compensa a barra fixa */
+            padding: 6rem 2rem 3rem 2rem;
             text-align: center;
         }
 
         .section-title {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::減fter {
-            content: '';
-            display: block;
-            width: 50%;
-            height: 4px;
-            background: var(--primaria);
-            margin: 8px auto 0 auto;
-            border-radius: 2px;
+            color: var(--primaria);
         }
 
         .section-desc {
             color: var(--texto-secundario);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+            margin-bottom: 3.5rem;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* --- Seção Sobre --- */
+        /* --- Seção Sobre (Agrinho) --- */
         #sobre .conteudo-sobre {
             background-color: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            max-width: 800px;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 900px;
             margin: 0 auto;
+            border-left: 5px solid var(--primaria);
+            border-right: 5px solid var(--secundaria);
         }
 
-        /* --- Seção Serviços (Grade de Cards) --- */
+        #sobre p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        /* --- Seção Conexões (Grade de Cards) --- */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
             justify-items: center;
         }
 
-        /* --- Componente Flip Card --- */
+        /* --- Componente Flip Card Adaptado --- */
         .flip-card {
             background-color: transparent;
             width: 100%;
-            max-width: 300px;
-            height: 350px;
+            max-width: 280px;
+            height: 360px;
             perspective: 1000px;
         }
 
@@ -169,8 +188,8 @@
             text-align: center;
             transition: transform 0.6s;
             transform-style: preserve-3d;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-radius: 20px;
         }
 
         .flip-card:hover .flip-card-inner {
@@ -188,121 +207,141 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: 20px;
         }
 
         .flip-card-front {
             background-color: var(--bg-card);
-            color: var(--texto);
+            border: 2px solid rgba(46, 125, 50, 0.1);
+        }
+
+        /* Estilização das cores traseiras baseadas no fluxo */
+        .card-campo .flip-card-back {
+            background: linear-gradient(135deg, var(--primaria), #1b5e20);
+            color: white;
+        }
+
+        .card-cidade .flip-card-back {
+            background: linear-gradient(135deg, var(--secundaria), #01579b);
+            color: white;
         }
 
         .flip-card-back {
-            background-color: var(--primaria);
-            color: white;
             transform: rotateY(180deg);
         }
 
+        .flip-card-back h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--destaque);
+            padding-bottom: 5px;
+        }
+
         .icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
         }
 
         /* --- Rodapé --- */
         footer {
             text-align: center;
-            padding: 2.5rem;
+            padding: 3rem;
             background-color: var(--bg-card);
-            margin-top: 5rem;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            margin-top: 6rem;
+            border-top: 3px solid var(--primaria);
+        }
+
+        footer p {
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">InterativOS</div>
+        <div class="logo-container">
+            <div class="logo-agrinho">Agrinho 2026</div>
+            <div class="logo-tema">Conexão Campo-Cidade</div>
+        </div>
         <nav>
             <ul>
                 <li><a href="#inicio">Início</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#sobre">Sobre o Tema</a></li>
+                <li><a href="#servicos">Conexões</a></li>
             </ul>
         </nav>
-        <button class="btn-tema" id="themeToggle">Mudar Tema</button>
+        <button class="btn-tema" id="themeToggle">Alternar Modo</button>
     </header>
 
     <main>
         <section id="inicio">
-            <h2 class="section-title">Bem-vindo ao Futuro da Web</h2>
-            <p class="section-desc">Explore nossa interface totalmente interativa, moderna e responsiva.</p>
+            <h2 class="section-title">O que une o campo e a cidade?</h2>
+            <p class="section-desc">Descubra como a produção rural e o desenvolvimento urbano caminham juntos através da tecnologia, sustentabilidade e cooperação.</p>
         </section>
 
-        <hr style="border: 0; height: 1px; background: rgba(0,0,0,0.1); max-width: 80%; margin: 0 auto;">
-
         <section id="sobre">
-            <h2 class="section-title">Sobre Nós</h2>
-            <p class="section-desc">Conheça um pouco mais sobre a nossa proposta de valor.</p>
+            <h2 class="section-title">Sobre o Tema</h2>
+            <p class="section-desc">A importância da interdependência entre os dois ecossistemas.</p>
             <div class="conteudo-sobre">
-                <p>Somos focados em criar experiências digitais fluidas e atraentes. Combinando as melhores práticas de HTML5 estrutural, CSS3 avançado e micro-interações pontuais para prender a atenção do usuário e elevar o nível do seu produto digital.</p>
+                <p>O programa <strong>Agrinho 2026</strong> traz como debate central a relação vital entre o interior e os centros urbanos. Longe de serem realidades isoladas, o campo e a cidade formam uma rede contínua de cooperação.</p>
+                <p>Enquanto o campo fornece os alimentos essenciais, as matérias-primas e preserva os recursos naturais que abastecem as metrópoles, a cidade devolve essa energia na forma de biotecnologia, maquinários avançados, softwares de gestão e o mercado consumidor que movimenta a economia agrícola. Entender essa engrenagem é essencial para construirmos um futuro sustentável.</p>
             </div>
         </section>
 
-        <hr style="border: 0; height: 1px; background: rgba(0,0,0,0.1); max-width: 80%; margin: 0 auto;">
-
         <section id="servicos">
-            <h2 class="section-title">Nossos Serviços</h2>
-            <p class="section-desc">Passe o mouse (ou toque) nos cards abaixo para descobrir o que fazemos.</p>
+            <h2 class="section-title">Eixos da Conexão</h2>
+            <p class="section-desc">Passe o mouse por cima dos cards para entender os pilares que sustentam essa relação.</p>
             
             <div class="cards-grid">
                 
-                <div class="flip-card">
+                <div class="flip-card card-campo">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <div class="icon">🎨</div>
-                            <h3>UI/UX Design</h3>
+                            <div class="icon">🌾</div>
+                            <h3>Abastecimento</h3>
                         </div>
                         <div class="flip-card-back">
-                            <h3>Interfaces Lindas</h3>
-                            <p style="margin-top: 10px;">Desenhamos layouts modernos com foco total na usabilidade e na experiência do usuário.</p>
+                            <h3>Do Campo à Mesa</h3>
+                            <p>A agricultura familiar e o agronegócio produzem os alimentos saudáveis que chegam diariamente aos supermercados e feiras das cidades.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="flip-card">
+                <div class="flip-card card-cidade">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <div class="icon">🚀</div>
-                            <h3>Otimização SEO</h3>
+                            <div class="icon">🚜</div>
+                            <h3>Tecnologia</h3>
                         </div>
                         <div class="flip-card-back">
-                            <h3>Alta Performance</h3>
-                            <p style="margin-top: 10px;">Códigos limpos para garantir que seu site apareça no Google e carregue na velocidade da luz.</p>
+                            <h3>Inovação Digital</h3>
+                            <p>Drones, GPS, sensores IoT e softwares desenvolvidos nos centros tecnológicos urbanos otimizam o plantio e evitam o desperdício no campo.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="flip-card">
+                <div class="flip-card card-campo">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <div class="icon">📱</div>
-                            <h3>Responsividade</h3>
+                            <div class="icon">🌱</div>
+                            <h3>Sustentabilidade</h3>
                         </div>
                         <div class="flip-card-back">
-                            <h3>Qualquer Tela</h3>
-                            <p style="margin-top: 10px;">Seu site funcionando perfeitamente em computadores, tablets e smartphones.</p>
+                            <h3>Meio Ambiente</h3>
+                            <p>Práticas como o manejo direto do solo e a preservação de nascentes no interior garantem o equilíbrio climático e a água potável que as cidades consomem.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="flip-card">
+                <div class="flip-card card-cidade">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <div class="icon">🔒</div>
-                            <h3>Segurança</h3>
+                            <div class="icon">🚛</div>
+                            <h3>Logística</h3>
                         </div>
                         <div class="flip-card-back">
-                            <h3>Dados Protegidos</h3>
-                            <p style="margin-top: 10px;">Implementação de boas práticas e protocolos para manter sua aplicação segura.</p>
+                            <h3>Cadeia de Valor</h3>
+                            <p>As rodovias, indústrias de processamento e redes logísticas urbanas transformam a matéria-prima bruta do campo em produtos de alto valor agregado.</p>
                         </div>
                     </div>
                 </div>
@@ -312,20 +351,6 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Meu Site Interativo. Feito com HTML e CSS.</p>
+        <p>Agrinho 2026 — Projeto Escolar: Conexão Campo-Cidade</p>
+        <p style="font-size: 0.85rem; color: var(--texto-secundario); margin-top: 5px;">Desenvolvido com foco em interatividade e responsividade digital.</p>
     </footer>
-
-    <script>
-        const themeToggleBtn = document.getElementById('themeToggle');
-        
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-        });
-    </script>
-</body>
-</html>
