@@ -1,19 +1,233 @@
-<!DOCTYPE html><html lang="pt-br">
-<head>  
-    <meta charset="UTF-8"> 
-    <title>titulo</title>  
-    <style>   
-        .header { background-color: #333; color: white; padding: 10px; }  
-        .footer { background-color: #333; color: white; padding: 5px; } 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Interativo Moderno</title>
+    <style>
+        /* --- Variáveis de Cores (Tema) --- */
+        :root {
+            --bg-principal: #f4f7f6;
+            --bg-card: #ffffff;
+            --texto: #333333;
+            --primaria: #4a90e2;
+            --secundaria: #50e3c2;
+        }
+
+        [data-theme="dark"] {
+            --bg-principal: #1e1e24;
+            --bg-card: #2a2a35;
+            --texto: #f4f7f6;
+            --primaria: #3a7bd5;
+            --secundaria: #3a6073;
+        }
+
+        /* --- Reset e Estilos Gerais --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        /* --- Header e Navegação --- */
+        header {
+            background-color: var(--bg-card);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primaria);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--texto);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primaria);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* --- Botão de Alternar Tema --- */
+        .btn-tema {
+            background-color: var(--primaria);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-tema:hover {
+            opacity: 0.9;
+        }
+
+        /* --- Conteúdo Principal --- */
+        main {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .intro {
+            text-align: center;
+        }
+
+        /* --- Elemento Interativo: Flip Card --- */
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 350px;
+            perspective: 1000px; /* Efeito 3D */
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 15px;
+        }
+
+        /* Ativa a rotação ao passar o mouse */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Suporte Safari */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .flip-card-front {
+            background-color: var(--bg-card);
+            color: var(--texto);
+        }
+
+        .flip-card-back {
+            background-color: var(--primaria);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Rodapé --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--bg-card);
+            margin-top: 5rem;
+        }
     </style>
 </head>
-    <body>  
-        <div class="header">   
-            <h1>Bem-vindo</h1>  
-        </div>  
-        <div class="footer">  
-            <p>© 2025</p>  
+<body>
+
+    <header>
+        <div class="logo">InterativOS</div>
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Serviços</a></li>
+            </ul>
+        </nav>
+        <button class="btn-tema" id="themeToggle">Mudar Tema</button>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Bem-vindo ao Futuro da Web</h2>
+            <p>Passe o mouse no card abaixo para ver a mágica do CSS acontecer.</p>
+        </section>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="icon">💡</div>
+                    <h3>Design Responsivo</h3>
+                    <p>Interatividade fluida e moderna.</p>
+                </div>
+                <div class="flip-card-back">
+                    <div class="icon">🚀</div>
+                    <h3>Efeito 3D</h3>
+                    <p>Criado inteiramente com CSS Transitions e Transforms.</p>
+                </div>
+            </div>
         </div>
-    </body>
-    agro é tech, agro é pop, agro é tudo
-</html>`
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Meu Site Interativo. Feito com HTML e CSS.</p>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
